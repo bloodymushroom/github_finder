@@ -1,0 +1,17 @@
+.view {
+	display: flex;
+	border: 1px solid grey;
+	margin: 20px 0 20px 0;
+}
+
+/* Profile */
+.profileContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.profileContainer > img {
+	height: 200px;
+	width: auto;
+}
