@@ -5,6 +5,12 @@ import React, { Component } from 'react'
 import { observer } from 'mobx-react'
 import store from './mobx/Store.js'
 
+// views
+import UserView from './views/UserView'
+
+// static components
+import Searchbar from './components/Searchbar'
+
 @observer
 class App extends Component {
 
@@ -33,10 +39,8 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				This this count is increasing, react is set up! <br /> { this.state.count }
-				<br/>
-				<button onClick={ this.incrementNumber }>Click to increase below</button>
-				<br />If this increases on click, mobx is set up: { store.number } 
+				<Searchbar />
+				<UserView />
 			</div>
 		)
 	}
