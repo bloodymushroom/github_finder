@@ -1,17 +1,167 @@
+@keyframes appear {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+
+html, body {
+	font-family: 'Roboto', sans-serif;
+	margin: 0;
+	height: 100%;
+}
+
+body > * {
+	height: 100%;
+}
+
+body > * > * > * {
+	padding: 0 50px 0 50px;
+}
+
 .view {
 	display: flex;
-	border: 1px solid grey;
-	margin: 20px 0 20px 0;
+	margin: 24px 0 24px 0;
+	height: 100%;
+/*	background-color: black;
+*/	background-image: linear-gradient(to right, rgba(245,245,245 ,1), rgba(224,224,224 ,1));
+	animation-name: appear;
+	animation-duration: 0.2s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+}
+
+.view > div {
+	margin: 10px;
+}
+
+h1 {
+	overflow-wrap: break-word;
+  	word-wrap: break-word;
+  	margin: 5px 0 5px 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+span {
+	word-break: break-word;
+}
+
+.smallIcon {
+	height: 12px;
+	margin-right: 5px;
+	width: auto;
+}
+
+.mediumIcon {
+	height: 33px;
+	width: auto;
+}
+
+/* SearchBar */
+.searchContainer {
+	height: 75px;
+	display: flex;
+    align-items: center;
+}
+
+.searchContainer > label {
+	font-size: 16px;
+	height: 24px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.searchInput {
+    border: 1px solid grey;
+    padding: 10px;
+    width: 50%;
+    font-size: 16px;
 }
 
 /* Profile */
 .profileContainer {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
-}
+	border: 1px solid blue;
+	max-width: 300px;
+	min-width: 200px;
+	min-height: 200px;
+/*	justify-content: space-between;
+*/}
 
 .profileContainer > img {
+	width: 200px;
+	height: auto;
+	align-self: center;
+}
+
+/* Repos */
+.reposContainer {
+	flex: 1;
+	overflow-y: scroll;
+	max-height: 500px;
+}
+
+.repo {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border: 1px solid grey;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+
+.repo > div {
+	flex: 1;
+}
+
+/* Comparison Views */
+.compareContainer {
+	flex: 1;
+}
+
+
+/* Chart */
+#chart {
+	height: 240px;
+	width:240px;
+	position: relative;
+}
+
+.legendContainer {
+	max-height: 200px;
+	overflow-y: scroll;
+}
+
+.legend {
+	font-size: 12px;
+	overflow-y: scroll;
 	height: 200px;
-	width: auto;
+}
+
+.tooltip {
+  background: #eee;
+  box-shadow: 0 0 5px #999999;
+  color: #333;
+  display: none;
+  font-size: 12px;
+  left: 130px;
+  padding: 10px;
+  position: absolute;
+  text-align: center;
+  top: 95px;
+  width: 80px;
+  z-index: 10;
+}
+
+rect {
+	stroke-width: 2px;
 }

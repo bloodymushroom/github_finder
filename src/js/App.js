@@ -6,7 +6,9 @@ import { observer } from 'mobx-react'
 import store from './mobx/Store.js'
 
 // views
+import Navbar from './components/Navbar'
 import UserView from './views/UserView'
+import ComparisonView from './views/ComparisonView'
 
 // static components
 import Searchbar from './components/Searchbar'
@@ -18,7 +20,8 @@ class App extends Component {
 		super(props)
 
 		this.state = {
-			count: 0
+			count: 0,
+			view: 'user'
 		}
 	}
 
@@ -32,15 +35,25 @@ class App extends Component {
 		store.incrementNumber();
 	}
 
+	handleClick(e) {
+		e.preventDefault();
+
+		this.setState({
+			view: e.target.name
+		})
+	}
+
 	componentDidMount() {
 		setInterval(this.incrementCount.bind(this), 500)
 	}
 
 	render() {
 		return (
-			<div>
+			<div style={{height: '100%'}}>
+				<Navbar />
 				<Searchbar />
-				<UserView />
+				{store.currentView === 'user' && <UserView />}
+				{store.currentView === 'compare' && <ComparisonView />}
 			</div>
 		)
 	}

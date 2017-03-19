@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
+import Snackbar from 'material-ui/Snackbar';
+
+import classNames from '../styles/style.css'
 
 // state
-import store, { user1 } from '../mobx/Store'
+import store, { user1, user2 } from '../mobx/Store'
+import { observer } from 'mobx-react'
 // import { user1 } from '../mobx/Store'
 
 const icons = {
   searchIcon: 'https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-128.png'
 }
 
+@observer
 class Searchbar extends Component {
   constructor() {
     super();
@@ -16,13 +21,18 @@ class Searchbar extends Component {
       username: ''
     }
 
-    console.log('user1: ', user1)
   }
 
   submitSearch(e) {
     e.preventDefault();
-    user1.findRepos(this.state.username)
-    console.log('searched for ', this.state.username)
+    if (!store.activeUser || store.activeUser === 'User 1') {
+      user1.findRepos(this.state.username)
+    } else {
+      user2.findRepos(this.state.username)
+    }
+
+    store.hasBeenSearched(this.state.username)
+    store.activeUser = null;
   }
 
   inputHandler(e) {
@@ -30,20 +40,26 @@ class Searchbar extends Component {
       username: e.target.value
     })
 
-    console.log('search contents: ', this.state.username)
   }
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.submitSearch.bind(this)} id='search'>
+    <div>
+      <span>{store.activeUser}</span>
+      <form onSubmit={this.submitSearch.bind(this)} id='search'>
+        <div className={classNames.searchContainer}>
           <label>
-            Search by username:
-            <input type='search' value={this.state.username} name='searchTerm' onChange={this.inputHandler.bind(this)} placeholder='e.g. "bloodymushroom"'/>
+            <span style={{marginRight: '20px'}}>Search by username:</span>
+            <input className={classNames.searchInput} type='search' value={this.state.username} name='searchTerm' onChange={this.inputHandler.bind(this)} placeholder='e.g. "bloodymushroom"'/>
+            <button type='submit'><img className={classNames.mediumIcon} src={icons.searchIcon} /></button>
           </label>
-          <button type='submit'><img src={icons.searchIcon} /></button>
-        </form>
-      </div>
+        </div>
+      </form>
+      <Snackbar 
+        open={store.showSnackbar}
+        message={store.searchedUser? `${this.state.username} has been searched ${store.searchedUser.timesSearched} times in the last 2 minutes.` : ''}
+      />
+    </div>
     )
   }
 }
