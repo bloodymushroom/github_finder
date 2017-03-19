@@ -55,5 +55,8 @@
     "webpack-merge": "^2.4.0",
     "webpack-node-externals": "^1.5.4",
     "write-file-webpack-plugin": "3.4.2"
+  },
+  "engines": {
+    "node": ">=4.1.0 <5.5.0"
   }
 }
