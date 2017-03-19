@@ -2,7 +2,7 @@
   "name": "react-mobx-webpack-bp",
   "version": "1.0.0",
   "description": "React + Mobx + Webpack Boilerplate",
-  "main": "server/server.js",
+  "main": "server.js",
   "scripts": {
     "clear-dist": "rm -rf dist/*",
     "build-web": "npm run clear-dist; NODE_ENV=production node -r babel-register node_modules/.bin/webpack --config webpack.config.prod.web.js -p --progress --profile --colors",
@@ -10,8 +10,8 @@
     "build-module": "npm run clear-dist; NODE_ENV=production node -r babel-register node_modules/.bin/webpack --config webpack.config.prod.module.js -p --progress --profile --colors",
     "start": "npm run clear-dist; NODE_ENV=development PORT=3002 node -r babel-register node_modules/.bin/webpack-dev-server --config webpack.config.dev.js --inline",
     "wstart": "cd workbench; npm start",
-    "server": "NODE_ENV=development PORT=3003 nodemon -r babel-register ./server/server.js",
-    "deploy": "npm run build-web; nodemon -r babel-register ./server/server.js "
+    "server": "NODE_ENV=development PORT=3003 nodemon -r babel-register server.js",
+    "deploy": "npm run build-web; node -r babel-register server.js "
   },
   "author": {
     "name": "Emm",
