@@ -1,7 +1,7 @@
 {
   "name": "github-finder challenge",
   "description": "challenge for way2b1",
-  "repository": "https://git.heroku.com/github-finder-challenge1.git",
+  "repository": "https://git.heroku.com/github-finder-challenge.git",
   "logo": "http://node-js-sample.herokuapp.com/node.svg",
   "keywords": ["node", "express", "static"]
 }
