@@ -1,5 +1,4 @@
 node_modules
-dist/
 secrets.*.js
 .vscode/
 flow-typed/

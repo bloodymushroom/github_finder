@@ -30,20 +30,24 @@ class UserView extends Component {
       return (
         <div className={classNames.view}>
           { user1.username ? (
-              <div className={classNames.view}>
+              <div className={classNames.subView}>
                 <Profile user={user1.profile}/>
                 <ReposContainer repos={user1.repos} />
                 <Chart />
               </div> 
             ) : (
-              <div>Message from github API: {user1.searchError}</div>
+              <div style={{flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                {
+                  user1.searchError ? 'Could not find user. Try again' : 'Search to start!' 
+                }
+              </div>
             )
           }
         </div>
       )
     } else {
       return (
-        <div className={classNames.view}>
+        <div style={{height: '70%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           <img src={icons.loading} />
         </div>
       )

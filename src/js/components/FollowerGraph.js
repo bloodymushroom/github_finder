@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 import store, { user1, user2 } from '../mobx/Store'
 import { toJS } from 'mobx'
@@ -12,7 +13,7 @@ class FollowerGraph extends Component {
     super(props)
 
     this.state = {
-      pending: false,
+      pending: false
     }
 
     this.commonFollowers = this.commonFollowers.bind(this)
@@ -21,21 +22,45 @@ class FollowerGraph extends Component {
   commonFollowers() {
     try {
       return (
-        <div style={{display: 'flex', flexDirection: 'column'}}> 
-        {user1.getSharedFollowers(user2).map((f) => {
-          return (
-            <div key={f.login}>
-              <img className={classNames.mediumIcon} src={f.avatar_url} />
-              {f.login}
-            </div>
-          )
-        })}
-        </div>
+        <Table >
+          <TableHeader
+            displaySelectAll={false}
+            adjustForCheckbox={false}
+          >
+            <TableRow>
+              <TableHeaderColumn style={{width: '30px'}}/>
+              <TableHeaderColumn>Users ({user1.getSharedFollowers(user2).length} total)</TableHeaderColumn>
+              <TableHeaderColumn width={'40%'}>Github</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody
+            displayRowCheckbox={false}
+            style={{maxHeight: '100%', overflow: 'scroll'}}
+          >
+            {user1.getSharedFollowers(user2).map((f) => {
+              return (
+                <TableRow>
+                  <TableRowColumn style={{width: '30px'}}>
+                    <img className={classNames.mediumIcon} src={f.avatar_url} />
+                  </TableRowColumn>
+                  <TableRowColumn>
+                    {f.login}
+                  </TableRowColumn>
+                  <TableRowColumn>
+                    <a target='_blank' href={f.html_url}>github/{f.login}</a>
+                  </TableRowColumn>
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
       )
     } 
     catch(e) {
       return (
-        <div>Pending</div>
+        <div className={classNames.errorDiv}>
+          <span>Pending</span>
+        </div>
       )
     }
   }
@@ -43,18 +68,14 @@ class FollowerGraph extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.commonFollowers.bind(this)}>Get common followers</button>
-        FollowerGraph
-        <div className={classNames.view}>
           User 1 followers: 
           {user1.followers.length}
-          <div ref='commonFollowers'/>
-          <div>
-          Shared:<br/> 
-          {this.commonFollowers()}
-          </div>
           User 2 followers:
           {user2.followers.length}
+        <div className={classNames.view}>
+          <div>
+          {this.commonFollowers()}
+          </div>
         </div>
       </div>
     )

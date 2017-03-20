@@ -33,6 +33,12 @@ class Searchbar extends Component {
 
     store.hasBeenSearched(this.state.username)
     store.activeUser = null;
+
+    // setTimeout(() => {
+    //   this.setState({
+    //     username: ''
+    //   })
+    // }, 100)
   }
 
   inputHandler(e) {
@@ -45,12 +51,11 @@ class Searchbar extends Component {
   render() {
     return (
     <div>
-      <span>{store.activeUser}</span>
       <form onSubmit={this.submitSearch.bind(this)} id='search'>
         <div className={classNames.searchContainer}>
           <label>
             <span style={{marginRight: '20px'}}>Search by username:</span>
-            <input className={classNames.searchInput} type='search' value={this.state.username} name='searchTerm' onChange={this.inputHandler.bind(this)} placeholder='e.g. "bloodymushroom"'/>
+            <input id='searchInput' className={classNames.searchInput} type='search' value={this.state.username} name='searchTerm' onChange={this.inputHandler.bind(this)} placeholder='e.g. "bloodymushroom"'/>
             <button type='submit'><img className={classNames.mediumIcon} src={icons.searchIcon} /></button>
           </label>
         </div>

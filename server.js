@@ -1,8 +1,9 @@
-import express from 'express'
-import cors from 'cors'
-import bodyParser from 'body-parser'
+var express = require('express')
+var cors = require('cors')
+var bodyParser = require('body-parser')
 
 const searchCache = {};
+const commitCache = {};
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -39,6 +40,32 @@ app.post('/search', (req, res) => {
   })
 })
 
+app.get('/commits/:user', (req, res) => {
+  var user = req.params.user;
+  if (commitCache[user]) {
+    res.json(commitCache[user])
+  } else {
+    res.status(400).json('no commits');
+  }
+})
+
+app.post('/commits/:user', (req, res) => {
+  commitCache[req.params.user] = req.body.commits;
+  console.log('saved commits', req.body.commits)
+  res.json('ok')
+})
+
+app.get('/login', (req, res) => {
+  res.redirect('https://github.com/login/oauth/authorize');
+  fetch('https://github.com/login/oauth/authorize', {
+    method: 'get'
+  })
+  .then( res => res.json())
+  .then( res => {
+    console.log('responded')
+    res.redirect('/')
+  })
+})
 
 
 app.listen(port, () => {

@@ -9,6 +9,7 @@ import store from './mobx/Store.js'
 import Navbar from './components/Navbar'
 import UserView from './views/UserView'
 import ComparisonView from './views/ComparisonView'
+import AuthModal from './components/AuthModal'
 
 // static components
 import Searchbar from './components/Searchbar'
@@ -51,6 +52,7 @@ class App extends Component {
 		return (
 			<div style={{height: '100%'}}>
 				<Navbar />
+				<AuthModal />
 				<Searchbar />
 				{store.currentView === 'user' && <UserView />}
 				{store.currentView === 'compare' && <ComparisonView />}
