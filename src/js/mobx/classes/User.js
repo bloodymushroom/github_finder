@@ -55,7 +55,6 @@ class User {
     if (user.followers.length === 0 || this.followers.length === 0) {
       return [];
     } else {
-      console.log('user2', typeof user.followers)
       var userFollowers = toJS(user.followers);
       return this.followers.filter( (follower) => {
         return user.followersObj[follower.id] !== undefined
@@ -82,17 +81,14 @@ class User {
     })
     .then( (res) => {
       if (res.status !== 200) {        
-        console.log('status:', res.status, res.statusText);
         throw new Error(res.statusText)
       }
       return res.json()
     })
     .then( (followers) => {
-      console.log('response',followers)
       this.followers = followers;
     })
     .catch( (err) => {
-      console.error('error', err)
       this.searchError = err.message;
       this.searchPending = false;
     })
@@ -122,7 +118,6 @@ class User {
     })
     .then( (res) => {
       if (res.status !== 200) {        
-        console.log('status:', res.status, res.statusText);
         throw new Error(res.statusText)
       }
       return res.json()
@@ -136,7 +131,6 @@ class User {
       this.profile.created_at = user.created_at;
       this.profile.updated_at = user.updated_at;
 
-      console.log(this.profile)
       this.searchPending = false;
     })
     .catch( (err) => {
@@ -156,8 +150,6 @@ class User {
     })
     .then((res) => {
       if (res.status !== 200) {        
-        console.log('status:', res.status, res.statusText);
-
         throw new Error(res.statusText)
       }
         return res.json()
@@ -183,9 +175,8 @@ class User {
 
       })
 
-      this.getEvents();
+      // this.getEvents();
       // this.getCommits();
-      console.log('got ', repos.length, ' repos')
     })
     .catch( (err) => {
       console.error('error', err.message)
@@ -200,7 +191,6 @@ class User {
     })
     .then(res => res.json())
     .then(events => {
-      console.log('got events', events)
     })
     .catch(err => console.error('not ok', err))
   }
@@ -243,7 +233,6 @@ class User {
     })
     .then( res => {
       if (res.status !== 200) {        
-        console.log('status:', res.status, res.statusText);
         throw new Error(res.statusText)
       }
         return res.json()

@@ -26,6 +26,7 @@ class Searchbar extends Component {
 
   submitSearch(e) {
     e.preventDefault();
+    store.searchedUser = null;
 
     if (this.state.username.length === 0 || this.state.username.split(' ').join('').length === 0 ) {
       this.setState({
@@ -42,6 +43,7 @@ class Searchbar extends Component {
     }
 
     store.hasBeenSearched(this.state.username)
+
     store.activeUser = null;
 
     // setTimeout(() => {
@@ -73,7 +75,7 @@ class Searchbar extends Component {
       </form>
       <Snackbar 
         open={store.showSnackbar}
-        message={store.searchedUser? `${this.state.username} has been searched ${store.searchedUser.timesSearched} times in the last 2 minutes.` : ''}
+        message={store.searchedUser && store.searchedUser.wasSearched? `${store.searchedUser.username} has been searched ${store.searchedUser.timesSearched} times in the last 2 minutes.` : ''}
       />
     </div>
     )

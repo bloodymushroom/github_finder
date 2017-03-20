@@ -8,6 +8,7 @@ import classNames from '../styles/style.css'
 
 import FollowerGraph from './FollowerGraph'
 import CommitGraph from './CommitGraph'
+import ComingSoon from './ComingSoon'
 
 class CompareContainer extends Component {
   constructor() {
@@ -36,7 +37,7 @@ class CompareContainer extends Component {
           <FollowerGraph />
         </Tab>
         <Tab style={{backgroundColor: 'transparent'}} label='Commits' value='commits'>
-          <CommitGraph />
+          <ComingSoon />
         </Tab>
       </Tabs>
     )

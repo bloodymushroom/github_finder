@@ -11,18 +11,17 @@ const port = process.env.PORT || 3000;
 // cors + bodyparser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(cors())
+app.use(cors())
 
 app.use('/', express.static('dist'))
 
-app.post('/search', (req, res) => {
-  const user = req.body.username;
+app.get('/search/:user', (req, res) => {
+  const user = req.params.user;
   let isFound = false;
 
   if (searchCache[user]) {
     isFound = true;
     searchCache[user]++;
-
   } else {
     searchCache[user] = 1;
   }
@@ -31,10 +30,8 @@ app.post('/search', (req, res) => {
     searchCache[user]--;
   }, 120000)
 
-  console.log('searched')
-
   res.json({
-    username: req.body.username,
+    username: user,
     wasSearched: isFound,
     timesSearched: searchCache[user]
   })
@@ -51,7 +48,6 @@ app.get('/commits/:user', (req, res) => {
 
 app.post('/commits/:user', (req, res) => {
   commitCache[req.params.user] = req.body.commits;
-  console.log('saved commits', req.params.user, req.body.commits)
   res.json('ok')
 })
 
@@ -62,7 +58,6 @@ app.get('/login', (req, res) => {
   })
   .then( res => res.json())
   .then( res => {
-    console.log('responded')
     res.redirect('/')
   })
 })

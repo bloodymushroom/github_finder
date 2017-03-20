@@ -1,6 +1,7 @@
 import mobx, { observable, action, computed, toJS } from 'mobx'
 
 const domain = 'https://github-finder-challenge.herokuapp.com/'
+// const domain = 'http://localhost:3000/';
 
 import User from './classes/User'
 import Repo from './classes/Repo'
@@ -19,14 +20,12 @@ class Content {
     })
     .then((res) => {
       if (res.status !== 200) {        
-        console.log('status:', res.status, res.statusText);
         throw new Error(res.statusText)
       }
         return res.json()
     })
     .then((code) => {
       this.code = code.content.split('\n');
-      console.log('code', this.code);
     })
     .catch( err => {
       console.log('error in contents', err)
@@ -67,25 +66,17 @@ class Store {
   }
 
   @action hasBeenSearched(user) {
-    console.log('in searched')
-    fetch(`${domain}search`, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: {
-        username: user
-      }
+    fetch(`${domain}search/${user}`, {
+      method: 'get'
     })
     .then( res => res.json())
     .then( search => {
       if(search.wasSearched) {
         this.searchedUser = search;
         this.showSnackbar = true;
-        setTimeout( () => this.showSnackbar = false, 3000)
-        console.log('user was searched', user, search.timesSearched)
+        setTimeout( () => this.showSnackbar = false, 2000)
       } else {
-        console.log('user was not searched')
+        return;
       }
     })
     .catch( err => console.log(err))

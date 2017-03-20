@@ -32,7 +32,6 @@ class Repo {
     })
     .then((res) => {
       if (res.status !== 200) {        
-        console.log('status:', res.status, res.statusText);
         throw new Error(res.statusText)
       }
         return res.json()

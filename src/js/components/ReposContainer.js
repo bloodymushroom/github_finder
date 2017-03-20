@@ -14,7 +14,6 @@ import classNames from '../styles/style.css'
 class ReposContainer extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       repos: this.props.repos,
       filter: 'name',

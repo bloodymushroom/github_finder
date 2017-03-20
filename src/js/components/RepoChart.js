@@ -23,7 +23,6 @@ class RepoChart extends Component {
 
   makePieChart() {
     var dataset = user1.repos.filter((repo) => repo.starCount > 0);
-    console.log('data', dataset)
     var width = 240;
     var height = 240;
     var radius = Math.min(width, height) /2 ;
@@ -65,7 +64,6 @@ class RepoChart extends Component {
     .attr('class', 'percent')
 
     path.on('mouseover', d => {
-      console.log("mouseover", tooltip)
       var totalStars = d3.sum(dataset.map( d => d.starCount));
       var percent = Math.round( 100 * d.starCount / totalStars);
       tooltip.select('.label').html(d.data.name);
@@ -83,7 +81,6 @@ class RepoChart extends Component {
   makeLegend() {
     var legendRectSize = 18;
     var legendSpacing = 4;
-    console.log('svg', svg)
     var height = this.state.color.domain().length * (legendRectSize + legendSpacing)
 
     var svg = d3.select('#legend')
