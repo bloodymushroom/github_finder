@@ -1,7 +1,7 @@
 import mobx, { observable, action, computed, toJS } from 'mobx'
 
-const domain = 'http://localhost:3003/';
-
+// const domain = 'http://localhost:3003/';
+const domain = 'https://github-finder-challenge.herokuapp.com/'
 
 class Repo {
   starGazers = [];

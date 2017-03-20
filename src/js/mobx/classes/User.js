@@ -2,10 +2,10 @@ import mobx, { observable, action, computed, toJS } from 'mobx'
 import Repo from './Repo'
 
 import moment from 'moment';
-// const domain = 'https://github-finder-challenge.herokuapp.com/';
+const domain = 'https://github-finder-challenge.herokuapp.com/';
 
 
-const domain = 'http://localhost:3000/';
+// const domain = 'http://localhost:3000/';
 
 
 
