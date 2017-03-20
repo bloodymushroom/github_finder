@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 // cors + bodyparser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors())
+// app.use(cors())
 
 app.use('/', express.static('dist'))
 
@@ -51,7 +51,7 @@ app.get('/commits/:user', (req, res) => {
 
 app.post('/commits/:user', (req, res) => {
   commitCache[req.params.user] = req.body.commits;
-  console.log('saved commits', req.body.commits)
+  console.log('saved commits', req.params.user, req.body.commits)
   res.json('ok')
 })
 

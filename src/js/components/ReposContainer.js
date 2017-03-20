@@ -3,6 +3,8 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import Toggle from 'material-ui/Toggle';
+
 
 import Repo from './Repo'
 import ReposTable from './ReposTable'
@@ -70,8 +72,8 @@ class ReposContainer extends Component {
   sortBySelector() {
     return (
       <SelectField
-        style={{width: '200px'}}
-        menuItemStyle={{width: '200px'}}
+        style={{width: '150px', fontSize: '0.8em'}}
+        menuItemStyle={{width: '100px'}}
         floatingLabelText='Sort by:'
         value={this.state.filter}
         onChange={this.clickHandler.bind(this)}
@@ -87,21 +89,27 @@ class ReposContainer extends Component {
     return (
       this.props.repos.length > 0 ? (
         <div className={classNames.reposContainer}>
-          <div style={{display: 'flex', alignItems: 'flex-end'}}>
-            <form style={{flex: 2}} name='filterRepos'>
-              <label>
-                Filter repos:
-                <TextField 
-                  style={{marginLeft: '10px'}}
-                  hintText='e.g. "react"'
-                  onChange={this.inputHandler.bind(this)}
-                />
-              </label>
-            </form>
-            {this.sortBySelector()}
-            <button onClick={this.toggleAscending.bind(this)}>{this.state.ascending? 'Ascending' : 'Descending'}</button>
+          <div style={{position: 'relative', display: 'flex', flexDirection: 'column', overflow: 'scroll'}}>
+            <div style={{display: 'flex', alignItems: 'flex-end'}}>
+              <span style={{marginBottom: '16px', fontSize: '0.9em'}}>Filter:</span>
+              <form  name='filterRepos'>
+                <label style={{display: 'flex', fontSize: '0.9em'}}>
+                  <TextField 
+                    style={{marginLeft: '5px', marginRight: '20px', fontSize:'0.8em'}}
+                    hintText='e.g. "react"'
+                    onChange={this.inputHandler.bind(this)}
+                  />
+                </label>
+              </form>
+              {this.sortBySelector()}
+              <Toggle
+                label="Ascending"
+                style={{marginLeft: '10px', fontSize: '0.8em',marginBottom: 10, width: '100px'}}
+                onToggle={this.toggleAscending.bind(this)}
+              />
+            </div>
+            <ReposTable repos={this.state.repos}/>
           </div>
-          <ReposTable repos={this.state.repos}/>
         </div>
       ) : (
         <div>User has no repos.</div>

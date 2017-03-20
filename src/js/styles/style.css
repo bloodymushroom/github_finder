@@ -7,6 +7,17 @@
 	}
 }
 
+@keyframes pulse {
+	0% {
+		font-size: 1.5em;
+	}
+	50% {
+		font-size: 1.7em;
+	}
+	100% {
+		font-size: 1.5em;
+	}
+}
 
 html, body {
 	font-family: 'Roboto', sans-serif;
@@ -122,7 +133,9 @@ span {
 .reposContainer {
 	flex: 1;
 	overflow-y: scroll;
-	max-height: 500px;
+	max-height: 100%;
+	padding: 0 10px 0 10px;
+	background-color: white;
 }
 
 .repo {
@@ -181,3 +194,44 @@ rect {
 	stroke-width: 2px;
 }
 
+.chartContainer {
+	background-color: white;
+}
+
+.followerContainer {
+	background-color: white;
+
+}
+
+.compareDiv{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.compareDiv > div {
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.number {
+	margin-left: 5px;
+	font-size: 1.5em;
+	width: 50px;
+	max-width: 250px;
+}
+
+.followerLabel {
+	font-size: 0.9em;
+}
+
+.greaterSpan {
+/*	color: rgba(213,0,0 ,1);
+	text-decoration: bold;
+	animation-name: pulse;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in;*/
+}

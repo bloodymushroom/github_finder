@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 // components 
 import Profile from '../components/Profile'
 import ReposContainer from '../components/ReposContainer'
-import Chart from '../components/Chart'
+import RepoChart from '../components/RepoChart'
 
 // style
 import classNames from '../styles/style.css'
@@ -21,37 +21,33 @@ const icons = {
 class UserView extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
   }
 
   render() {
-    console.log('user1 in component', toJS(user1.profile))
-    if (!user1.searchPending) {
       return (
         <div className={classNames.view}>
-          { user1.username ? (
+        { !user1.searchPending? (
+            user1.username ? (
               <div className={classNames.subView}>
                 <Profile user={user1.profile}/>
                 <ReposContainer repos={user1.repos} />
-                <Chart />
+                {user1.repos.length > 0 && <RepoChart />}
               </div> 
             ) : (
               <div style={{flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                 {
-                  user1.searchError ? 'Could not find user. Try again' : 'Search to start!' 
+                  user1.searchError ? <span>{user1.searchError}<br/>Please try again.</span>  : 'Search to start!' 
                 }
               </div>
             )
-          }
+          ) : (
+          <div style={{flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+            <img src={icons.loading} />
+          </div>
+          )
+        }
         </div>
       )
-    } else {
-      return (
-        <div style={{height: '70%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-          <img src={icons.loading} />
-        </div>
-      )
-    }
   }
 }
 

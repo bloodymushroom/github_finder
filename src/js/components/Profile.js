@@ -51,7 +51,7 @@ class Profile extends Component {
               </CardMedia>
               {this.props.children}
               <CardTitle 
-                title='No active user!' 
+                title={'No active user!' }
                 subtitle='Click the FIND USER button above and type a username in the search bar to start.'
               />
             </Card>

@@ -18,13 +18,23 @@ class Searchbar extends Component {
     super();
 
     this.state = {
-      username: ''
+      username: '',
+      error: null
     }
 
   }
 
   submitSearch(e) {
     e.preventDefault();
+
+    if (this.state.username.length === 0 || this.state.username.split(' ').join('').length === 0 ) {
+      this.setState({
+        error: 'Username must not be blank.'
+      })
+
+      return;
+    }
+
     if (!store.activeUser || store.activeUser === 'User 1') {
       user1.findRepos(this.state.username)
     } else {
@@ -43,14 +53,15 @@ class Searchbar extends Component {
 
   inputHandler(e) {
     this.setState({
-      username: e.target.value
+      username: e.target.value,
+      error: null
     })
 
   }
 
   render() {
     return (
-    <div>
+    <div style={{textAlign: 'center'}}>
       <form onSubmit={this.submitSearch.bind(this)} id='search'>
         <div className={classNames.searchContainer}>
           <label>

@@ -8,7 +8,7 @@ import { user1, user2 } from '../mobx/Store'
 import classNames from '../styles/style.css'
 
 @observer
-class Chart extends Component {
+class RepoChart extends Component {
   constructor() {
     super()
 
@@ -144,11 +144,11 @@ class Chart extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Repo Overview</h1>
+      <div className={classNames.chartContainer} >
+        <h1>Star Distribution</h1>
         <span>Total stars: {user1.totalStars}</span>
         <div id='starChart' />
-        <span>Repos</span>
+        <span>Starred Repos</span><br/>
         <div className={classNames.legendContainer}>
           <div id='legend' />
         </div>
@@ -157,4 +157,4 @@ class Chart extends Component {
   }
 }
 
-export default Chart
+export default RepoChart

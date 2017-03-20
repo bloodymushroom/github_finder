@@ -29,8 +29,8 @@ class FollowerGraph extends Component {
           >
             <TableRow>
               <TableHeaderColumn style={{width: '30px'}}/>
-              <TableHeaderColumn>Users ({user1.getSharedFollowers(user2).length} total)</TableHeaderColumn>
-              <TableHeaderColumn width={'40%'}>Github</TableHeaderColumn>
+              <TableHeaderColumn>Common Followers ({user1.getSharedFollowers(user2).length} total)</TableHeaderColumn>
+              <TableHeaderColumn>Github</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -68,10 +68,25 @@ class FollowerGraph extends Component {
   render() {
     return (
       <div>
-          User 1 followers: 
-          {user1.followers.length}
-          User 2 followers:
-          {user2.followers.length}
+        <div className={classNames.compareDiv}>
+          {
+            !user1.username && !user2.username && <div>Start searching to compare!</div>
+          }
+          {user1.username && ( <div>
+            <span className={classNames.followerLabel}>{user1.username}'s total followers: </span>
+            <span className={user2.followers.length > user1.followers.length? classNames.number : [classNames.greaterSpan, classNames.number].join(' ')}>
+              {user1.followers.length}
+            </span>
+          </div>
+          )}
+          {user2.username && (<div>
+            <span className={classNames.followerLabel}>{user2.username}'s total followers:</span>
+            <span className={user2.followers.length > user1.followers.length? [classNames.greaterSpan, classNames.number].join(' ') : classNames.number}>
+              {user2.followers.length}
+            </span>
+          </div>
+          )}
+        </div>
         <div className={classNames.view}>
           <div>
           {this.commonFollowers()}

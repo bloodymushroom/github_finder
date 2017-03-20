@@ -1,7 +1,11 @@
 import mobx, { observable, action, computed, toJS } from 'mobx'
 import Repo from './Repo'
 
-const domain = 'https://github-finder-challenge.herokuapp.com/';
+import moment from 'moment';
+// const domain = 'https://github-finder-challenge.herokuapp.com/';
+
+
+const domain = 'http://localhost:3000/';
 
 
 
@@ -14,6 +18,7 @@ class User {
   @observable followers = [];
   @observable totalCommits = null;
   @observable commits = [];
+  @observable events = [];
 
   @observable repoStats = {
     maxStars: 0,
@@ -40,6 +45,10 @@ class User {
     }
 
     return ret;
+  }
+
+  @computed get commitsMap() {
+    var ret = {};
   }
 
   @action getSharedFollowers(user) {
@@ -148,12 +157,18 @@ class User {
     .then((res) => {
       if (res.status !== 200) {        
         console.log('status:', res.status, res.statusText);
+
         throw new Error(res.statusText)
       }
         return res.json()
       })
     .then((repos) => {
       this.username = username;
+
+      if (repos.length === 0) {
+        throw new Error('This user does not have any repos.')
+      }
+
       this.setProfile(repos[0]);
 
       repos.forEach((repo) => {
@@ -167,13 +182,39 @@ class User {
         }
 
       })
+
+      this.getEvents();
+      // this.getCommits();
       console.log('got ', repos.length, ' repos')
     })
     .catch( (err) => {
-      console.error('error', err)
+      console.error('error', err.message)
       this.searchError = err.message;
       this.searchPending = false;
     })
+  }
+
+  @action getEvents() {
+    fetch(`https://api.github.com/users/${this.username}/events`, {
+      method: 'get'
+    })
+    .then(res => res.json())
+    .then(events => {
+      console.log('got events', events)
+    })
+    .catch(err => console.error('not ok', err))
+  }
+
+  @action saveTest(username) {
+    fetch(`${domain}commits/${username}`, {
+      method: 'post',
+      body: {
+        commits: 'string'
+      }
+    })
+    .then(res => res.json())
+    .then(data => console.log('ok', data))
+    .catch(err => console.error('not ok', err))
   }
 
   @action saveCommits(commits, username) {
@@ -183,8 +224,7 @@ class User {
         'Content-Type': 'application/json'
       },
       body: {
-        commits: commits.items,
-        totalCommits: commits.total_count
+        commits: commits
       }
     })
     .then(res => res.json())
@@ -214,7 +254,7 @@ class User {
     })
     .catch( (err) => {
       console.log('err', err)
-      fetch(`https://api.github.com/search/commits?q=author:${this.username}`, {
+      fetch(`https://api.github.com/search/commits?q=author:${this.username}&per_page=100`, {
         method: 'get',
         headers: {
           'Accept': 'application/vnd.github.cloak-preview'
@@ -230,8 +270,14 @@ class User {
       .then((commits) => {
         console.log('got commits for ', this.username, commits)
         this.totalCommits = commits.total_count;
-        this.commits = commits;
-        this.saveCommits(commits, this.username);
+        commits.items.forEach( (commit) => {
+          this.commits.push({
+            author: commit.commiter.login,
+            date: commit.commit.author.date,
+            message: commit.message,
+            repo: commit.repository.name
+          })
+        })
       })
       .catch( (err) => {
         console.error('error', err)
