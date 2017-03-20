@@ -51,17 +51,6 @@ app.post('/commits/:user', (req, res) => {
   res.json('ok')
 })
 
-app.get('/login', (req, res) => {
-  res.redirect('https://github.com/login/oauth/authorize');
-  fetch('https://github.com/login/oauth/authorize', {
-    method: 'get'
-  })
-  .then( res => res.json())
-  .then( res => {
-    res.redirect('/')
-  })
-})
-
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}!`);

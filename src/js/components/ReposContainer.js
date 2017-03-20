@@ -88,17 +88,15 @@ class ReposContainer extends Component {
     return (
       this.props.repos.length > 0 ? (
         <div className={classNames.reposContainer}>
-          <div style={{position: 'relative', display: 'flex', flexDirection: 'column', overflow: 'scroll'}}>
-            <div style={{display: 'flex', alignItems: 'flex-end'}}>
+          <div style={{position: 'relative', display: 'flex', flexDirection: 'column', overflowY: 'scroll'}}>
+            <div style={{display: 'flex', alignItems: 'flex-end', flexWrap: 'wrap'}}>
               <span style={{marginBottom: '16px', fontSize: '0.9em'}}>Filter:</span>
               <form  name='filterRepos'>
-                <label style={{display: 'flex', fontSize: '0.9em'}}>
                   <TextField 
                     style={{marginLeft: '5px', marginRight: '20px', fontSize:'0.8em'}}
                     hintText='e.g. "react"'
                     onChange={this.inputHandler.bind(this)}
                   />
-                </label>
               </form>
               {this.sortBySelector()}
               <Toggle

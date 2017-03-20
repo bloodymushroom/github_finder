@@ -1,4 +1,6 @@
 import mobx, { observable, action, computed, toJS } from 'mobx'
+import 'whatwg-fetch'; 
+
 import Repo from './Repo'
 
 import moment from 'moment';
@@ -6,8 +8,6 @@ const domain = 'https://github-finder-challenge.herokuapp.com/';
 
 
 // const domain = 'http://localhost:3000/';
-
-
 
 class User {
   @observable username = null;
@@ -47,9 +47,23 @@ class User {
     return ret;
   }
 
-  @computed get commitsMap() {
+  /*
+  @computed get commitsByDateCount() {
+                author: commit.commiter.login,
+            date: commit.commit.author.date,
+            message: commit.message,
+            repo: commit.repository.name
     var ret = {};
+
+    this.commits.forEach( commit => {
+      var date = moment(commiit.date).format('YYYY-MM-DD');
+
+      if (ret[date])
+    })
   }
+
+  @computed
+  */
 
   @action getSharedFollowers(user) {
     if (user.followers.length === 0 || this.followers.length === 0) {

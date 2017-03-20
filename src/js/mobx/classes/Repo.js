@@ -1,5 +1,5 @@
 import mobx, { observable, action, computed, toJS } from 'mobx'
-
+import 'whatwg-fetch'; 
 // const domain = 'http://localhost:3003/';
 const domain = 'https://github-finder-challenge.herokuapp.com/'
 
